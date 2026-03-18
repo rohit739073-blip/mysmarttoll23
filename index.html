@@ -1,1 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart CSC Tools - 100+ Professional Tools for CSC Operators</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== COLORS ===== */
+        :root {
+            --bg: #F8FAFC;
+            --primary: #2563EB;
+            --primary-dark: #1E40AF;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --border: #E5E7EB;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--card);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-login {
+            padding: 8px 20px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-signup {
+            padding: 8px 20px;
+            background: var(--primary);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-signup:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px 0 0 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 15px 30px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .search-box button:hover {
+            background: #111827;
+        }
+
+        /* ===== CATEGORY TABS ===== */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ===== TOOLS GRID ===== */
+        .section-title {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            text-align: center;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .tool-card {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .tool-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            padding: 60px 0;
+            background: var(--card);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats {
+            padding: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-col a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        /* ===== NO RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 60px;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: var(--text-light);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .features-grid,
+            .stats-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    Smart <span>CSC</span> Tools
+                </a>
+                <div class="nav-menu">
+                    <a href="index.html">Home</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#features">Features</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn-login">Login</button>
+                    <button class="btn-signup">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>100+ Professional Tools for CSC Operators</h1>
+            <p>Free PDF Tools, Image Tools, Calculators & Sarkari Tools - All in One Place</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search tools... (e.g., PDF Merger, Image Resizer)">
+                <button onclick="searchTools()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="filterTools('all')">All Tools</button>
+            <button class="tab-btn" onclick="filterTools('pdf')">PDF Tools</button>
+            <button class="tab-btn" onclick="filterTools('image')">Image Tools</button>
+            <button class="tab-btn" onclick="filterTools('calculator')">Calculators</button>
+            <button class="tab-btn" onclick="filterTools('sarkari')">Sarkari Tools</button>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No Tools Found</h3>
+            <p>Try searching with different keywords</p>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="tools-grid" id="toolsGrid"></div>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">Why Choose <span>Smart CSC Tools</span></h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>Process your files in seconds</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Secure</h3>
+                    <p>Your files are automatically deleted</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-infinity"></i>
+                    <h3>Unlimited Use</h3>
+                    <p>No limits, completely free</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works on all devices</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Total Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Happy Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Smart CSC Tools</h3>
+                    <p>India's most trusted platform for CSC operators with 100+ professional tools.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#features">Features</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Tools</h3>
+                    <a href="tools/pdf-merger.html">PDF Merger</a>
+                    <a href="tools/image-resizer.html">Image Resizer</a>
+                    <a href="tools/age-calculator.html">Age Calculator</a>
+                    <a href="tools/aadhaar-generator.html">Aadhaar Generator</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> info@smartcsctools.com</p>
+                    <p><i class="fas fa-phone"></i> +91 1234567890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Smart CSC Tools. All rights reserved. Made with ❤️ in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== TOOLS DATA (100+ Tools) =====
+        const toolsData = [
+            // PDF Tools (30)
+            { name: "PDF Merger", icon: "fa-solid fa-object-group", category: "pdf", desc: "Merge multiple PDFs into one", file: "tools/pdf-merger.html" },
+            { name: "PDF Splitter", icon: "fa-solid fa-scissors", category: "pdf", desc: "Split PDF into separate pages", file: "tools/pdf-splitter.html" },
+            { name: "PDF Compressor", icon: "fa-solid fa-compress", category: "pdf", desc: "Reduce PDF file size", file: "tools/pdf-compressor.html" },
+            { name: "PDF to Word", icon: "fa-solid fa-file-word", category: "pdf", desc: "Convert PDF to Word", file: "tools/pdf-to-word.html" },
+            { name: "PDF to Excel", icon: "fa-solid fa-file-excel", category: "pdf", desc: "Convert PDF to Excel", file: "tools/pdf-to-excel.html" },
+            { name: "PDF to PPT", icon: "fa-solid fa-file-powerpoint", category: "pdf", desc: "Convert PDF to PowerPoint", file: "tools/pdf-to-ppt.html" },
+            { name: "PDF to JPG", icon: "fa-solid fa-file-image", category: "pdf", desc: "Convert PDF to images", file: "tools/pdf-to-jpg.html" },
+            { name: "JPG to PDF", icon: "fa-solid fa-image", category: "pdf", desc: "Convert images to PDF", file: "tools/jpg-to-pdf.html" },
+            { name: "Word to PDF", icon: "fa-solid fa-file-word", category: "pdf", desc: "Convert Word to PDF", file: "tools/word-to-pdf.html" },
+            { name: "Excel to PDF", icon: "fa-solid fa-file-excel", category: "pdf", desc: "Convert Excel to PDF", file: "tools/excel-to-pdf.html" },
+            { name: "PPT to PDF", icon: "fa-solid fa-file-powerpoint", category: "pdf", desc: "Convert PPT to PDF", file: "tools/ppt-to-pdf.html" },
+            { name: "Edit PDF", icon: "fa-solid fa-pen-to-square", category: "pdf", desc: "Edit text in PDF", file: "tools/edit-pdf.html" },
+            { name: "Sign PDF", icon: "fa-solid fa-signature", category: "pdf", desc: "Add signature to PDF", file: "tools/sign-pdf.html" },
+            { name: "Watermark PDF", icon: "fa-solid fa-droplet", category: "pdf", desc: "Add watermark", file: "tools/watermark-pdf.html" },
+            { name: "Rotate PDF", icon: "fa-solid fa-rotate-right", category: "pdf", desc: "Rotate PDF pages", file: "tools/rotate-pdf.html" },
+            { name: "Number Pages", icon: "fa-solid fa-hashtag", category: "pdf", desc: "Add page numbers", file: "tools/number-pages.html" },
+            { name: "Remove Pages", icon: "fa-solid fa-trash", category: "pdf", desc: "Delete PDF pages", file: "tools/remove-pages.html" },
+            { name: "Extract Pages", icon: "fa-solid fa-copy", category: "pdf", desc: "Extract specific pages", file: "tools/extract-pages.html" },
+            { name: "Protect PDF", icon: "fa-solid fa-lock", category: "pdf", desc: "Add password", file: "tools/protect-pdf.html" },
+            { name: "Unlock PDF", icon: "fa-solid fa-unlock", category: "pdf", desc: "Remove password", file: "tools/unlock-pdf.html" },
+            { name: "OCR PDF", icon: "fa-solid fa-eye", category: "pdf", desc: "Scanned PDF to text", file: "tools/ocr-pdf.html" },
+            { name: "PDF to HTML", icon: "fa-solid fa-code", category: "pdf", desc: "Convert to HTML", file: "tools/pdf-to-html.html" },
+            { name: "HTML to PDF", icon: "fa-solid fa-globe", category: "pdf", desc: "Convert HTML to PDF", file: "tools/html-to-pdf.html" },
+            { name: "PDF to Text", icon: "fa-solid fa-paragraph", category: "pdf", desc: "Extract text", file: "tools/pdf-to-text.html" },
+            { name: "Compare PDF", icon: "fa-solid fa-not-equal", category: "pdf", desc: "Compare two PDFs", file: "tools/compare-pdf.html" },
+            { name: "Flatten PDF", icon: "fa-solid fa-layer-group", category: "pdf", desc: "Flatten PDF forms", file: "tools/flatten-pdf.html" },
+            { name: "Optimize PDF", icon: "fa-solid fa-gauge-high", category: "pdf", desc: "Optimize for web", file: "tools/optimize-pdf.html" },
+            { name: "Repair PDF", icon: "fa-solid fa-wrench", category: "pdf", desc: "Fix corrupted PDF", file: "tools/repair-pdf.html" },
+            { name: "Aadhaar to PDF", icon: "fa-solid fa-id-card", category: "pdf", desc: "Convert Aadhaar to PDF", file: "tools/aadhaar-to-pdf.html" },
+            { name: "PAN to PDF", icon: "fa-solid fa-credit-card", category: "pdf", desc: "Convert PAN to PDF", file: "tools/pan-to-pdf.html" },
+
+            // Image Tools (25)
+            { name: "Image Resizer", icon: "fa-solid fa-expand", category: "image", desc: "Resize images", file: "tools/image-resizer.html" },
+            { name: "Image Compressor", icon: "fa-solid fa-compress", category: "image", desc: "Compress images", file: "tools/image-compressor.html" },
+            { name: "Image Cropper", icon: "fa-solid fa-crop", category: "image", desc: "Crop images", file: "tools/image-cropper.html" },
+            { name: "JPG to PNG", icon: "fa-solid fa-rotate", category: "image", desc: "Convert JPG to PNG", file: "tools/jpg-to-png.html" },
+            { name: "PNG to JPG", icon: "fa-solid fa-rotate", category: "image", desc: "Convert PNG to JPG", file: "tools/png-to-jpg.html" },
+            { name: "Background Remover", icon: "fa-solid fa-eraser", category: "image", desc: "Remove background", file: "tools/background-remover.html" },
+            { name: "Passport Photo", icon: "fa-solid fa-passport", category: "image", desc: "Create passport photo", file: "tools/passport-photo.html" },
+            { name: "Signature Maker", icon: "fa-solid fa-pen", category: "image", desc: "Create signature", file: "tools/signature-maker.html" },
+            { name: "Thumb Impression", icon: "fa-solid fa-hand", category: "image", desc: "Resize thumb", file: "tools/thumb-impression.html" },
+            { name: "Image Enhancer", icon: "fa-solid fa-wand-magic", category: "image", desc: "Enhance quality", file: "tools/image-enhancer.html" },
+            { name: "Add Text", icon: "fa-solid fa-font", category: "image", desc: "Add text to image", file: "tools/add-text.html" },
+            { name: "Add Border", icon: "fa-solid fa-border-all", category: "image", desc: "Add border", file: "tools/add-border.html" },
+            { name: "Image to PDF", icon: "fa-solid fa-file-pdf", category: "image", desc: "Image to PDF", file: "tools/image-to-pdf.html" },
+            { name: "Image Rotator", icon: "fa-solid fa-rotate", category: "image", desc: "Rotate image", file: "tools/image-rotator.html" },
+            { name: "Image Flipper", icon: "fa-solid fa-arrow-right-arrow-left", category: "image", desc: "Flip image", file: "tools/image-flipper.html" },
+            { name: "Image to Text", icon: "fa-solid fa-file-lines", category: "image", desc: "Extract text", file: "tools/image-to-text.html" },
+            { name: "Face Detection", icon: "fa-solid fa-face-smile", category: "image", desc: "Detect faces", file: "tools/face-detection.html" },
+            { name: "Object Removal", icon: "fa-solid fa-eraser", category: "image", desc: "Remove objects", file: "tools/object-removal.html" },
+            { name: "Colorize Photo", icon: "fa-solid fa-palette", category: "image", desc: "Colorize B&W", file: "tools/colorize-photo.html" },
+            { name: "Image Upscaler", icon: "fa-solid fa-magnifying-glass-plus", category: "image", desc: "Increase size", file: "tools/image-upscaler.html" },
+            { name: "Background Blur", icon: "fa-solid fa-blur", category: "image", desc: "Blur background", file: "tools/background-blur.html" },
+            { name: "Image to Sketch", icon: "fa-solid fa-pencil", category: "image", desc: "Convert to sketch", file: "tools/image-to-sketch.html" },
+            { name: "Watermark Image", icon: "fa-solid fa-droplet", category: "image", desc: "Add watermark", file: "tools/watermark-image.html" },
+            { name: "Image Metadata", icon: "fa-solid fa-info", category: "image", desc: "View metadata", file: "tools/image-metadata.html" },
+            { name: "Image Converter", icon: "fa-solid fa-rotate", category: "image", desc: "Convert format", file: "tools/image-converter.html" },
+
+            // Calculator Tools (20)
+            { name: "Age Calculator", icon: "fa-solid fa-calendar", category: "calculator", desc: "Calculate age", file: "tools/age-calculator.html" },
+            { name: "Date Calculator", icon: "fa-solid fa-calendar-days", category: "calculator", desc: "Date difference", file: "tools/date-calculator.html" },
+            { name: "Percentage", icon: "fa-solid fa-percent", category: "calculator", desc: "Percentage calc", file: "tools/percentage-calculator.html" },
+            { name: "CGPA Calculator", icon: "fa-solid fa-chart-simple", category: "calculator", desc: "CGPA to %", file: "tools/cgpa-calculator.html" },
+            { name: "EMI Calculator", icon: "fa-solid fa-money-bill", category: "calculator", desc: "Loan EMI", file: "tools/emi-calculator.html" },
+            { name: "GST Calculator", icon: "fa-solid fa-file-invoice", category: "calculator", desc: "GST calculation", file: "tools/gst-calculator.html" },
+            { name: "Discount", icon: "fa-solid fa-tag", category: "calculator", desc: "Discount price", file: "tools/discount-calculator.html" },
+            { name: "Profit/Loss", icon: "fa-solid fa-chart-line", category: "calculator", desc: "Profit loss", file: "tools/profit-loss.html" },
+            { name: "Simple Interest", icon: "fa-solid fa-coins", category: "calculator", desc: "SI calculator", file: "tools/simple-interest.html" },
+            { name: "Compound Interest", icon: "fa-solid fa-chart-pie", category: "calculator", desc: "CI calculator", file: "tools/compound-interest.html" },
+            { name: "Salary", icon: "fa-solid fa-wallet", category: "calculator", desc: "In-hand salary", file: "tools/salary-calculator.html" },
+            { name: "Electricity Bill", icon: "fa-solid fa-bolt", category: "calculator", desc: "Bill calculator", file: "tools/electricity-bill.html" },
+            { name: "Fuel Cost", icon: "fa-solid fa-gas-pump", category: "calculator", desc: "Trip cost", file: "tools/fuel-cost.html" },
+            { name: "BMI", icon: "fa-solid fa-heart-pulse", category: "calculator", desc: "Body mass index", file: "tools/bmi-calculator.html" },
+            { name: "Area", icon: "fa-solid fa-draw-polygon", category: "calculator", desc: "Area calculator", file: "tools/area-calculator.html" },
+            { name: "Volume", icon: "fa-solid fa-cube", category: "calculator", desc: "Volume calc", file: "tools/volume-calculator.html" },
+            { name: "Speed", icon: "fa-solid fa-gauge-high", category: "calculator", desc: "Speed distance", file: "tools/speed-calculator.html" },
+            { name: "Time Duration", icon: "fa-solid fa-clock", category: "calculator", desc: "Time between", file: "tools/time-duration.html" },
+            { name: "Work Hours", icon: "fa-solid fa-briefcase", category: "calculator", desc: "Work time", file: "tools/work-hours.html" },
+            { name: "Tax Calculator", icon: "fa-solid fa-calculator", category: "calculator", desc: "Income tax", file: "tools/tax-calculator.html" },
+
+            // Sarkari Tools (15)
+            { name: "Aadhaar Generator", icon: "fa-solid fa-id-card", category: "sarkari", desc: "Masked Aadhaar", file: "tools/aadhaar-generator.html" },
+            { name: "PAN Generator", icon: "fa-solid fa-credit-card", category: "sarkari", desc: "PAN card format", file: "tools/pan-generator.html" },
+            { name: "Voter ID", icon: "fa-solid fa-check-to-slot", category: "sarkari", desc: "Voter ID format", file: "tools/voter-id.html" },
+            { name: "Ration Card", icon: "fa-solid fa-basket-shopping", category: "sarkari", desc: "Ration card", file: "tools/ration-card.html" },
+            { name: "Income Certificate", icon: "fa-solid fa-file-invoice", category: "sarkari", desc: "Income cert", file: "tools/income-certificate.html" },
+            { name: "Caste Certificate", icon: "fa-solid fa-file-lines", category: "sarkari", desc: "Caste cert", file: "tools/caste-certificate.html" },
+            { name: "Domicile", icon: "fa-solid fa-house", category: "sarkari", desc: "Domicile cert", file: "tools/domicile.html" },
+            { name: "Birth Certificate", icon: "fa-solid fa-baby", category: "sarkari", desc: "Birth cert", file: "tools/birth-certificate.html" },
+            { name: "Death Certificate", icon: "fa-solid fa-cross", category: "sarkari", desc: "Death cert", file: "tools/death-certificate.html" },
+            { name: "Marriage Certificate", icon: "fa-solid fa-heart", category: "sarkari", desc: "Marriage cert", file: "tools/marriage-certificate.html" },
+            { name: "Driving License", icon: "fa-solid fa-car", category: "sarkari", desc: "Driving license", file: "tools/driving-license.html" },
+            { name: "Passport App", icon: "fa-solid fa-passport", category: "sarkari", desc: "Passport form", file: "tools/passport-app.html" },
+            { name: "Scholarship", icon: "fa-solid fa-graduation-cap", category: "sarkari", desc: "Scholarship", file: "tools/scholarship.html" },
+            { name: "Pension", icon: "fa-solid fa-hand-holding-heart", category: "sarkari", desc: "Pension calc", file: "tools/pension.html" },
+            { name: "Scheme Eligibility", icon: "fa-solid fa-check-circle", category: "sarkari", desc: "Check eligibility", file: "tools/scheme-eligibility.html" }
+        ];
+
+        // Render Tools Function
+        function renderTools(tools) {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+            tools.forEach(tool => {
+                const card = document.createElement('a');
+                card.href = tool.file;
+                card.className = 'tool-card';
+                card.setAttribute('data-category', tool.category);
+                card.setAttribute('data-name', tool.name);
+                card.innerHTML = `
+                    <div class="tool-icon"><i class="${tool.icon}"></i></div>
+                    <h3>${tool.name}</h3>
+                    <p>${tool.desc}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial Render
+        renderTools(toolsData);
+
+        // Filter Function
+        function filterTools(category) {
+            const cards = document.querySelectorAll('.tool-card');
+            const tabs = document.querySelectorAll('.tab-btn');
+            let visibleCount = 0;
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                const toolCategory = card.getAttribute('data-category');
+                if (category === 'all' || toolCategory === category) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        }
+
+        // Search Function
+        function searchTools() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.tool-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const toolName = card.getAttribute('data-name').toLowerCase();
+                if (toolName.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
