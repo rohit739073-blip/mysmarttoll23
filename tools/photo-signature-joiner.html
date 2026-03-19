@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Signature Joiner - Smart CSC Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ===== PROFESSIONAL COLOR SCHEME ===== */
+        :root {
+            --primary: #FF5722;
+            --primary-dark: #E64A19;
+            --primary-light: #FF8A65;
+            --secondary: #1A237E;
+            --secondary-light: #283593;
+            --success: #4CAF50;
+            --info: #00BCD4;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --dark: #263238;
+            --light: #F5F5F6;
+            --white: #FFFFFF;
+            --gradient-1: linear-gradient(135deg, #FF5722, #FF8A65);
+            --gradient-2: linear-gradient(135deg, #1A237E, #3949AB);
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --box-shadow-hover: 0 10px 25px rgba(255,87,34,0.2);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--gradient-2);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: var(--white);
+            text-decoration: none;
+            background: linear-gradient(135deg, #fff, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== TOOL HEADER ===== */
+        .tool-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .tool-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .tool-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .sarkari-badge {
+            display: inline-block;
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: var(--success);
+            color: var(--white);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== TOOL CONTENT ===== */
+        .tool-content {
+            padding: 4rem 0;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Upload Sections */
+        .upload-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .upload-section h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary-light);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(255,87,34,0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area h3 {
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .upload-area p {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .file-info {
+            background: var(--light);
+            padding: 0.8rem;
+            border-radius: 10px;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .file-info.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .file-details {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .file-details i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .remove-file {
+            color: var(--danger);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: inline-block;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            grid-column: span 2;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .preview-box {
+            text-align: center;
+        }
+
+        .preview-box h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .image-preview {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1rem;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 160px;
+            border-radius: 5px;
+        }
+
+        .placeholder-text {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            grid-column: span 2;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .control-group select,
+        .control-group input[type="range"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .layout-options {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .layout-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .layout-option:hover {
+            border-color: var(--primary);
+        }
+
+        .layout-option.active {
+            border-color: var(--primary);
+            background: rgba(255,87,34,0.05);
+        }
+
+        .layout-option i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .layout-option span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #3d8b40;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--light);
+            border-radius: 3px;
+            margin: 1rem 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar.show {
+            display: block;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Instructions */
+        .instructions {
+            grid-column: span 2;
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .instructions h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instructions li::before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .back-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+
+            .instructions ul {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .layout-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="../index.html">🇮🇳 Smart CSC Tools</a>
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">Home</a>
+                    <a href="../index.html#tools">Tools</a>
+                    <a href="../about.html">About</a>
+                    <a href="../contact.html">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="container">
+            <span class="sarkari-badge">🇮🇳 Sarkari Tool</span>
+            <span class="new-badge">NEW</span>
+            <h1>Photo Signature Joiner</h1>
+            <p>Join photo and signature in one frame for government applications, forms, and documents</p>
+        </div>
+    </section>
+
+    <!-- Tool Content -->
+    <section class="tool-content">
+        <div class="container">
+            <div class="tool-container">
+                <!-- Upload Photo Section -->
+                <div class="upload-section">
+                    <h2><span>📸</span> Upload Photo</h2>
+                    
+                    <div class="upload-area" id="uploadPhotoArea">
+                        <i>📷</i>
+                        <h3>Click to Upload Photo</h3>
+                        <p>JPG, PNG, JPEG (Max 5MB)</p>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                    </div>
+
+                    <div class="file-info" id="photoInfo">
+                        <div class="file-details">
+                            <i>🖼️</i>
+                            <div>
+                                <div class="file-name" id="photoName">photo.jpg</div>
+                                <div class="file-size" id="photoSize">2.5 MB</div>
+                            </div>
+                        </div>
+                        <div class="remove-file" id="removePhoto">Remove</div>
+                    </div>
+                </div>
+
+                <!-- Upload Signature Section -->
+                <div class="upload-section">
+                    <h2><span>✍️</span> Upload Signature</h2>
+                    
+                    <div class="upload-area" id="uploadSignatureArea">
+                        <i>✒️</i>
+                        <h3>Click to Upload Signature</h3>
+                        <p>JPG, PNG, JPEG (Max 2MB)</p>
+                        <input type="file" id="signatureInput" accept="image/*" style="display: none;">
+                    </div>
+
+                    <div class="file-info" id="signatureInfo">
+                        <div class="file-details">
+                            <i>✍️</i>
+                            <div>
+                                <div class="file-name" id="signatureName">signature.png</div>
+                                <div class="file-size" id="signatureSize">1.2 MB</div>
+                            </div>
+                        </div>
+                        <div class="remove-file" id="removeSignature">Remove</div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <h2 style="color: var(--secondary);">👁️ Preview</h2>
+                    
+                    <div class="preview-container">
+                        <!-- Photo Preview -->
+                        <div class="preview-box">
+                            <h4>Photo</h4>
+                            <div class="image-preview" id="photoPreview">
+                                <span class="placeholder-text">No photo selected</span>
+                            </div>
+                        </div>
+
+                        <!-- Signature Preview -->
+                        <div class="preview-box">
+                            <h4>Signature</h4>
+                            <div class="image-preview" id="signaturePreview">
+                                <span class="placeholder-text">No signature selected</span>
+                            </div>
+                        </div>
+
+                        <!-- Joined Preview -->
+                        <div class="preview-box">
+                            <h4>Joined Result</h4>
+                            <div class="image-preview" id="joinedPreview">
+                                <span class="placeholder-text">Joined image will appear here</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--secondary);">⚙️ Layout Settings</h2>
+                    
+                    <!-- Layout Options -->
+                    <div class="control-group">
+                        <label>Choose Layout:</label>
+                        <div class="layout-options">
+                            <div class="layout-option active" onclick="setLayout('vertical')" id="layoutVertical">
+                                <i>⬇️</i>
+                                <span>Vertical (Photo top, Signature bottom)</span>
+                            </div>
+                            <div class="layout-option" onclick="setLayout('horizontal')" id="layoutHorizontal">
+                                <i>➡️</i>
+                                <span>Horizontal (Photo left, Signature right)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacing -->
+                    <div class="control-group">
+                        <label for="spacing">Spacing between images: <span id="spacingValue" class="range-value">10px</span></label>
+                        <input type="range" id="spacing" min="0" max="50" value="10">
+                    </div>
+
+                    <!-- Border -->
+                    <div class="control-group">
+                        <label for="border">Border thickness: <span id="borderValue" class="range-value">2px</span></label>
+                        <input type="range" id="border" min="0" max="10" value="2">
+                    </div>
+
+                    <!-- Border Color -->
+                    <div class="control-group">
+                        <label for="borderColor">Border color:</label>
+                        <select id="borderColor">
+                            <option value="#000000">Black</option>
+                            <option value="#FF5722">Orange (Sarkari)</option>
+                            <option value="#1A237E">Blue (Government)</option>
+                            <option value="#4CAF50">Green</option>
+                            <option value="#F44336">Red</option>
+                            <option value="#9C27B0">Purple</option>
+                            <option value="#FFC107">Yellow</option>
+                        </select>
+                    </div>
+
+                    <!-- Background Color -->
+                    <div class="control-group">
+                        <label for="bgColor">Background color:</label>
+                        <select id="bgColor">
+                            <option value="#FFFFFF">White</option>
+                            <option value="#F5F5F5">Light Gray</option>
+                            <option value="#E3F2FD">Light Blue</option>
+                            <option value="#FFF3E0">Light Orange</option>
+                            <option value="#E8F5E9">Light Green</option>
+                            <option value="#FFEBEE">Light Red</option>
+                            <option value="transparent">Transparent</option>
+                        </select>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="joinBtn" disabled>🔗 Join Images</button>
+                        <button class="btn btn-success" id="downloadBtn" disabled>📥 Download</button>
+                        <button class="btn btn-secondary" id="resetBtn">🔄 Reset All</button>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="instructions">
+                    <h3>📋 How to Use Photo Signature Joiner</h3>
+                    <ul>
+                        <li>Upload your photo (passport size recommended)</li>
+                        <li>Upload your signature (on white paper, clear)</li>
+                        <li>Choose layout - Vertical or Horizontal</li>
+                        <li>Adjust spacing between images</li>
+                        <li>Add border if needed</li>
+                        <li>Click "Join Images" to combine</li>
+                        <li>Preview the result</li>
+                        <li>Download for government forms</li>
+                        <li>Perfect for job applications, forms, and documents</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Back to Home Link -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="../index.html" class="back-link">← Back to Home</a>
+                <span style="margin: 0 10px; color: #ccc;">|</span>
+                <a href="../index.html#tools" class="back-link">View All Tools</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2026 Smart CSC Tools. All rights reserved. | Made for CSC VLEs</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Get DOM elements
+        const photoInput = document.getElementById('photoInput');
+        const signatureInput = document.getElementById('signatureInput');
+        
+        const uploadPhotoArea = document.getElementById('uploadPhotoArea');
+        const uploadSignatureArea = document.getElementById('uploadSignatureArea');
+        
+        const photoInfo = document.getElementById('photoInfo');
+        const signatureInfo = document.getElementById('signatureInfo');
+        
+        const photoName = document.getElementById('photoName');
+        const photoSize = document.getElementById('photoSize');
+        const signatureName = document.getElementById('signatureName');
+        const signatureSize = document.getElementById('signatureSize');
+        
+        const removePhoto = document.getElementById('removePhoto');
+        const removeSignature = document.getElementById('removeSignature');
+        
+        const photoPreview = document.getElementById('photoPreview');
+        const signaturePreview = document.getElementById('signaturePreview');
+        const joinedPreview = document.getElementById('joinedPreview');
+        
+        const joinBtn = document.getElementById('joinBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        
+        const spacing = document.getElementById('spacing');
+        const spacingValue = document.getElementById('spacingValue');
+        const border = document.getElementById('border');
+        const borderValue = document.getElementById('borderValue');
+        const borderColor = document.getElementById('borderColor');
+        const bgColor = document.getElementById('bgColor');
+        
+        const layoutVertical = document.getElementById('layoutVertical');
+        const layoutHorizontal = document.getElementById('layoutHorizontal');
+
+        // State variables
+        let photoFile = null;
+        let signatureFile = null;
+        let photoImageUrl = null;
+        let signatureImageUrl = null;
+        let joinedImageUrl = null;
+        let currentLayout = 'vertical';
+
+        // Update range values
+        spacing.addEventListener('input', function() {
+            spacingValue.textContent = this.value + 'px';
+        });
+
+        border.addEventListener('input', function() {
+            borderValue.textContent = this.value + 'px';
+        });
+
+        // Upload photo click
+        uploadPhotoArea.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        // Upload signature click
+        uploadSignatureArea.addEventListener('click', () => {
+            signatureInput.click();
+        });
+
+        // Photo input change
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handlePhotoFile(file);
+            }
+        });
+
+        // Signature input change
+        signatureInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleSignatureFile(file);
+            }
+        });
+
+        // Handle photo file
+        function handlePhotoFile(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Photo size should be less than 5MB');
+                return;
+            }
+
+            photoFile = file;
+            
+            photoName.textContent = file.name;
+            photoSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+            photoInfo.classList.add('show');
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                photoImageUrl = e.target.result;
+                photoPreview.innerHTML = `<img src="${photoImageUrl}" alt="Photo">`;
+                checkJoinButton();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Handle signature file
+        function handleSignatureFile(file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Signature size should be less than 2MB');
+                return;
+            }
+
+            signatureFile = file;
+            
+            signatureName.textContent = file.name;
+            signatureSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+            signatureInfo.classList.add('show');
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                signatureImageUrl = e.target.result;
+                signaturePreview.innerHTML = `<img src="${signatureImageUrl}" alt="Signature">`;
+                checkJoinButton();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Remove photo
+        removePhoto.addEventListener('click', () => {
+            photoFile = null;
+            photoImageUrl = null;
+            photoInput.value = '';
+            photoInfo.classList.remove('show');
+            photoPreview.innerHTML = '<span class="placeholder-text">No photo selected</span>';
+            checkJoinButton();
+        });
+
+        // Remove signature
+        removeSignature.addEventListener('click', () => {
+            signatureFile = null;
+            signatureImageUrl = null;
+            signatureInput.value = '';
+            signatureInfo.classList.remove('show');
+            signaturePreview.innerHTML = '<span class="placeholder-text">No signature selected</span>';
+            checkJoinButton();
+        });
+
+        // Check if join button should be enabled
+        function checkJoinButton() {
+            joinBtn.disabled = !(photoFile && signatureFile);
+        }
+
+        // Set layout
+        function setLayout(layout) {
+            currentLayout = layout;
+            if (layout === 'vertical') {
+                layoutVertical.classList.add('active');
+                layoutHorizontal.classList.remove('active');
+            } else {
+                layoutHorizontal.classList.add('active');
+                layoutVertical.classList.remove('active');
+            }
+        }
+
+        // Join button click
+        joinBtn.addEventListener('click', () => {
+            if (!photoFile || !signatureFile) return;
+
+            // Show progress bar
+            progressBar.classList.add('show');
+            
+            // Simulate processing
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressFill.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        // Create canvas to join images
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        const photoImg = new Image();
+                        const signatureImg = new Image();
+                        
+                        photoImg.src = photoImageUrl;
+                        signatureImg.src = signatureImageUrl;
+                        
+                        Promise.all([
+                            new Promise(resolve => { photoImg.onload = resolve; }),
+                            new Promise(resolve => { signatureImg.onload = resolve; })
+                        ]).then(() => {
+                            const spacingPx = parseInt(spacing.value);
+                            const borderPx = parseInt(border.value);
+                            const borderColorValue = borderColor.value;
+                            const bgColorValue = bgColor.value;
+                            
+                            let canvasWidth, canvasHeight;
+                            
+                            if (currentLayout === 'vertical') {
+                                canvasWidth = Math.max(photoImg.width, signatureImg.width) + 2 * borderPx;
+                                canvasHeight = photoImg.height + signatureImg.height + spacingPx + 2 * borderPx;
+                            } else {
+                                canvasWidth = photoImg.width + signatureImg.width + spacingPx + 2 * borderPx;
+                                canvasHeight = Math.max(photoImg.height, signatureImg.height) + 2 * borderPx;
+                            }
+                            
+                            canvas.width = canvasWidth;
+                            canvas.height = canvasHeight;
+                            
+                            // Fill background
+                            if (bgColorValue === 'transparent') {
+                                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                            } else {
+                                ctx.fillStyle = bgColorValue;
+                                ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                            }
+                            
+                            // Draw border if needed
+                            if (borderPx > 0) {
+                                ctx.strokeStyle = borderColorValue;
+                                ctx.lineWidth = borderPx;
+                                ctx.strokeRect(borderPx/2, borderPx/2, canvasWidth - borderPx, canvasHeight - borderPx);
+                            }
+                            
+                            // Draw images
+                            if (currentLayout === 'vertical') {
+                                ctx.drawImage(photoImg, borderPx, borderPx);
+                                ctx.drawImage(signatureImg, borderPx, photoImg.height + spacingPx + borderPx);
+                            } else {
+                                ctx.drawImage(photoImg, borderPx, borderPx);
+                                ctx.drawImage(signatureImg, photoImg.width + spacingPx + borderPx, borderPx);
+                            }
+                            
+                            joinedImageUrl = canvas.toDataURL('image/png');
+                            joinedPreview.innerHTML = `<img src="${joinedImageUrl}" alt="Joined">`;
+                            downloadBtn.disabled = false;
+                            progressBar.classList.remove('show');
+                        });
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // Download button
+        downloadBtn.addEventListener('click', () => {
+            if (joinedImageUrl) {
+                const link = document.createElement('a');
+                link.download = 'photo-signature-joined.png';
+                link.href = joinedImageUrl;
+                link.click();
+            }
+        });
+
+        // Reset button
+        resetBtn.addEventListener('click', () => {
+            photoFile = null;
+            signatureFile = null;
+            photoImageUrl = null;
+            signatureImageUrl = null;
+            joinedImageUrl = null;
+            
+            photoInput.value = '';
+            signatureInput.value = '';
+            
+            photoInfo.classList.remove('show');
+            signatureInfo.classList.remove('show');
+            
+            photoPreview.innerHTML = '<span class="placeholder-text">No photo selected</span>';
+            signaturePreview.innerHTML = '<span class="placeholder-text">No signature selected</span>';
+            joinedPreview.innerHTML = '<span class="placeholder-text">Joined image will appear here</span>';
+            
+            joinBtn.disabled = true;
+            downloadBtn.disabled = true;
+            
+            progressBar.classList.remove('show');
+            progressFill.style.width = '0%';
+            
+            // Reset to default layout
+            setLayout('vertical');
+            spacing.value = '10';
+            border.value = '2';
+            spacingValue.textContent = '10px';
+            borderValue.textContent = '2px';
+        });
+
+        // Drag and drop for photo
+        uploadPhotoArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadPhotoArea.style.borderColor = 'var(--primary)';
+        });
+
+        uploadPhotoArea.addEventListener('dragleave', () => {
+            uploadPhotoArea.style.borderColor = 'var(--primary-light)';
+        });
+
+        uploadPhotoArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadPhotoArea.style.borderColor = 'var(--primary-light)';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handlePhotoFile(file);
+            }
+        });
+
+        // Drag and drop for signature
+        uploadSignatureArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSignatureArea.style.borderColor = 'var(--primary)';
+        });
+
+        uploadSignatureArea.addEventListener('dragleave', () => {
+            uploadSignatureArea.style.borderColor = 'var(--primary-light)';
+        });
+
+        uploadSignatureArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSignatureArea.style.borderColor = 'var(--primary-light)';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleSignatureFile(file);
+            }
+        });
+    </script>
+</body>
+</html>
